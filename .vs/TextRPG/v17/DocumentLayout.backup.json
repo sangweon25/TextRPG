@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "D:\\Sparta\\C#\\TextRPG\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{63969CDB-9E3E-483F-80B4-133F0DDDB758}|TextRPG\\TextRPG.csproj|d:\\sparta\\c#\\textrpg\\textrpg\\menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{63969CDB-9E3E-483F-80B4-133F0DDDB758}|TextRPG\\TextRPG.csproj|solutionrelative:textrpg\\menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{63969CDB-9E3E-483F-80B4-133F0DDDB758}|TextRPG\\TextRPG.csproj|d:\\sparta\\c#\\textrpg\\textrpg\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{63969CDB-9E3E-483F-80B4-133F0DDDB758}|TextRPG\\TextRPG.csproj|solutionrelative:textrpg\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{63969CDB-9E3E-483F-80B4-133F0DDDB758}|TextRPG\\TextRPG.csproj|d:\\sparta\\c#\\textrpg\\textrpg\\menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63969CDB-9E3E-483F-80B4-133F0DDDB758}|TextRPG\\TextRPG.csproj|solutionrelative:textrpg\\menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{63969CDB-9E3E-483F-80B4-133F0DDDB758}|TextRPG\\TextRPG.csproj|d:\\sparta\\c#\\textrpg\\textrpg\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -26,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
@@ -56,26 +56,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Menu.cs",
               "DocumentMoniker": "D:\\Sparta\\C#\\TextRPG\\TextRPG\\Menu.cs",
               "RelativeDocumentMoniker": "TextRPG\\Menu.cs",
               "ToolTip": "D:\\Sparta\\C#\\TextRPG\\TextRPG\\Menu.cs",
               "RelativeToolTip": "TextRPG\\Menu.cs",
-              "ViewState": "AgIAAN8AAAAAAAAAAAAAAPEAAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAAOoAAAAAAAAAAADwv/YAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-03T03:18:42.042Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Sparta\\C#\\TextRPG\\TextRPG\\Program.cs",
               "RelativeDocumentMoniker": "TextRPG\\Program.cs",
               "ToolTip": "D:\\Sparta\\C#\\TextRPG\\TextRPG\\Program.cs",
               "RelativeToolTip": "TextRPG\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABDAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-03T02:23:52.617Z",
               "EditorCaption": ""
