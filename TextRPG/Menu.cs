@@ -8,30 +8,33 @@ namespace TextRPG
 {
     internal static class Menu
     {
+        static Item? AttItem = null;
+        static Item? DefItem = null;
+
         public static void PrintState(Player player, List<Item>playerItem)
         {
             bool state = true;
             string equipped = "[E]";
             int itemAtt , itemDef;
             itemAtt = itemDef = 0;
-            
+
+            //아이템의 공격력,방어력 저장받기
+            foreach (Item item in playerItem)
+            {
+                if (item.Name.Contains(equipped))
+                {
+                    if (item.AbilityType == "공격력")
+                        itemAtt += item.Ability;
+                    else if (item.AbilityType == "방어력")
+                        itemDef += item.Ability;
+                }
+            }
+
             while (state)
             {
-                Console.Clear();
                 Console.WriteLine("상태 보기");
                 Console.WriteLine("캐릭터의 정보가 표시됩니다.\n");
-
-                //아이템의 공격력,방어력 저장받기
-                foreach (Item item in playerItem)
-                {
-                    if(item.Name.Contains(equipped))
-                    {
-                        if(item.AbilityType =="공격력")
-                            itemAtt += item.Ability;
-                        else if(item.AbilityType == "방어력")
-                            itemDef += item.Ability;
-                    }
-                }
+         
                 Console.WriteLine($"Lv. {player.Level}");
                 Console.WriteLine($"{player.Name} ({player.CharacterClass})");
                 if (itemAtt > 0) Console.WriteLine($"공격력 : {player.Att} (+{itemAtt})"); else Console.WriteLine($"공격력 : {player.Att}");
@@ -47,6 +50,16 @@ namespace TextRPG
                         state = false;
                         Console.Clear();
                     }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("잘못 입력했습니다.\n");
+                    }
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("잘못 입력했습니다.\n");
                 }
             }//while
         }//State method
@@ -55,6 +68,8 @@ namespace TextRPG
             bool state = true;
             bool equip = false;
             string equipped = "[E]";
+         
+
             while (state)
             {
                 if (equip == false)
@@ -88,13 +103,44 @@ namespace TextRPG
                     {
                         if (input <= playerItem.Count) // 인벤토리 장비 착용
                         {
-                            //착용 미착용 전환 조건
-                            if (playerItem[input - 1].Name.Contains(equipped))
+                            //장착된 무기가 없고 공격력 타입이면 장착
+                            if(AttItem == null && playerItem[input-1].AbilityType =="공격력")
                             {
-                                playerItem[input - 1].Name = playerItem[input - 1].Name.Replace(equipped, "");
+                                AttItem = playerItem[input-1];
+                                AttItem.EquipItem(playerItem[input - 1]);
                             }
-                            else
-                                playerItem[input - 1].Name = playerItem[input - 1].Name.Insert(0, equipped);
+                            //장착된 방어구가 없고 공격력 타입이면 장착
+                            else if (DefItem == null && playerItem[input - 1].AbilityType == "방어력")
+                            {
+                                DefItem = playerItem[input - 1];
+                                DefItem.EquipItem(playerItem[input - 1]);
+                            }
+                            //장착된 무기가 있는데 장착된 무기를 선택시 해제
+                            else if (AttItem == playerItem[input - 1])
+                            {
+                                AttItem.UnEquipItem(playerItem[input - 1]);
+                                AttItem = null;
+                            }
+                            //장착된 방어구가 있는데 장착된 방어구를 선택시 해제
+                            else if (DefItem == playerItem[input - 1])
+                            {
+                                DefItem.UnEquipItem(playerItem[input - 1]);
+                                DefItem = null;
+                            }
+                            //장착된 무기와 다른 무기를 선택시 교체
+                            else if (AttItem != playerItem[input - 1] && playerItem[input - 1].AbilityType == "공격력" && AttItem != null)
+                            {
+                                AttItem.UnEquipItem(AttItem);
+                                AttItem = playerItem[input - 1];
+                                AttItem.EquipItem(playerItem[input - 1]);
+                            }
+                            //장착된 방어구와 다른 방어구를 선택시 교체
+                            else if (DefItem != playerItem[input - 1] && playerItem[input - 1].AbilityType =="방어력" && DefItem != null)
+                            {
+                                DefItem.UnEquipItem(DefItem);
+                                DefItem = playerItem[input - 1];
+                                DefItem.EquipItem(playerItem[input - 1]);
+                            }
 
                             Console.Clear();
                         }
@@ -129,28 +175,38 @@ namespace TextRPG
         {
             bool state = true;
             bool buy = false;
+            bool sell = false;
             
             while (state)
             {
-                if (buy == false)
-                    Console.WriteLine("상점");
-                else
+                if(buy == true)
                     Console.WriteLine("상점 - 아이템 구매");
+                else if(sell == true)
+                    Console.WriteLine("상점 - 아이템 판매\n");
+                else if (buy == false)
+                    Console.WriteLine("상점");
+
                 Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.\n");
                 Console.WriteLine("[보유 골드]");
                 Console.WriteLine($"{player.Gold} G\n");
                 Console.WriteLine("[아이템 목록]");
 
-                PrintStoretItem(buy,storeItem,true);
+                if(buy == true)
+                    PrintStoretItem(buy,sell,storeItem,true);
+                else if(sell ==true)
+                    PrintStoretItem(buy, sell, playerItem, true);
 
-                if (buy == false)
+                if (buy == false&& sell == false)
+                {
                     Console.WriteLine("\n1. 아이템 구매");
-
+                    Console.WriteLine("2. 아이템 판매");
+                }
                 Console.WriteLine("0. 나가기\n");
                 Console.Write("원하시는 행동을 입력해주세요.\n>>");
+
                 if (int.TryParse(Console.ReadLine(), out int input))
                 {
-                    if(buy == false && input ==1) // 1. 상점 - 아이템구매 입장
+                    if(buy == false && sell == false && input ==1) // 1. 상점 - 아이템구매 입장
                     {
                         buy = true;
                         Console.Clear();
@@ -195,6 +251,31 @@ namespace TextRPG
                             Console.WriteLine("잘못된 입력입니다.\n");
                         }
                     }
+                    else if (sell == false && input ==2)
+                    {
+                        sell = true;
+                        Console.Clear();
+                    }
+                    else if(sell == true)
+                    {
+                        if (0 < input && input <= playerItem.Count) //판매 아이템 입력
+                        {
+                            player.SellItem(playerItem[input - 1].Gold); // 골드 획득
+                            if (playerItem[input - 1].Paid.Contains("구매완료"))
+                                playerItem[input - 1].Paid = playerItem[input - 1].Paid.Replace("구매완료","");
+                            if (playerItem[input - 1].Name.Contains("[E]"))
+                                playerItem[input - 1].Paid = playerItem[input - 1].Paid.Replace("[E]", "");
+
+                            playerItem.Remove(playerItem[input - 1]);
+                            Console.Clear();
+                            Console.WriteLine("판매를 완료했습니다.\n");
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine("잘못된 입력입니다.\n");
+                        }
+                    }
                     else
                     {
                         Console.Clear(); 
@@ -204,20 +285,26 @@ namespace TextRPG
             }//while
         }//PrintStore method
 
-        public static void PrintStoretItem(bool detailMenu, List<Item>ItemList, bool isBuy)
+        public static void PrintStoretItem(bool buyMenu,bool sellMenu, List<Item>ItemList, bool isBuy)
         {
             int i = 1;
             foreach (Item item in ItemList)
             {
-                if (detailMenu)
+                if (buyMenu)
+                {
                     Console.Write($"- {i++} ");
-
-                Console.Write($"{item.Name}  \t| {item.AbilityType} +{item.Ability}\t| {item.Description}\t| ");
-
-                if(item.Paid.Contains("구매완료"))
-                    Console.WriteLine(item.Paid);
-                else
-                    Console.WriteLine("{0} G",item.Gold);
+                    Console.Write($"{item.Name}  \t| {item.AbilityType} +{item.Ability}\t| {item.Description}\t| ");
+                    if (item.Paid.Contains("구매완료"))
+                        Console.WriteLine(item.Paid);
+                    else
+                        Console.WriteLine("{0} G", item.Gold);
+                }
+                else if (sellMenu && item.Paid.Contains("구매완료"))
+                {
+                    Console.Write($"- {i++} ");
+                    Console.WriteLine($"{item.Name}  \t| {item.AbilityType} +{item.Ability}\t| {item.Description}\t| {item.Gold*0.85f} ");
+                }
+              
             }
         }//PCurrentItem Method
 

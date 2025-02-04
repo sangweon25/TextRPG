@@ -31,6 +31,10 @@ namespace TextRPG
         {
             return Gold -= gold;
         }
+        public int SellItem(int gold)
+        {
+            return Gold += (int)(gold * 0.85f);
+        }
 
         public void HpRecovery()
         {

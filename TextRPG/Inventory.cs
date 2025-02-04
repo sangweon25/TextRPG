@@ -40,6 +40,15 @@ namespace TextRPG
             Paid = paid;
         }
 
+        public void EquipItem(Item item)
+        {
+            item.Name = item.Name.Insert(0,"[E]");
+        }
+        public void UnEquipItem(Item item)
+        {
+            item.Name = item.Name.Replace("[E]", "");
+        }
+
     }
 
 
