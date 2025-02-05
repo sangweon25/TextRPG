@@ -8,15 +8,18 @@ namespace TextRPG
 {
     class Player
     {
-        public int Level { get; }
+        public int Level { get; private set; }
         public string Name { get; }
         public string CharacterClass { get; }
-        public int Att  { get; }
-        public int Def { get; }
+        public float Att  { get; private set; }
+        public int Def { get; private set; }
         public int Hp { get; private set; }
         public int Gold { get; private set; }
 
-        public Player(int level, string name, string characterClass, int att, int def, int hp, int gold)
+        public int ItemAtt { get; set; }
+        public int ItemDef { get; set; }
+
+        public Player(int level, string name, string characterClass, float att, int def, int hp, int gold, int itemAtt = 0, int itemDef = 0)
         {
             this.Level = level;
             this.Name = name;
@@ -25,6 +28,8 @@ namespace TextRPG
             this.Def = def;
             this.Hp = hp;
             this.Gold = gold;
+            this.ItemAtt = itemAtt;
+            this.ItemDef = itemDef;
         }
 
         public int BuyItem(int gold)
@@ -36,9 +41,39 @@ namespace TextRPG
             return Gold += (int)(gold * 0.85f);
         }
 
+        public int AddGold(int gold)
+        {
+            return Gold += gold;
+        }
+
+
         public void HpRecovery()
         {
             Hp = 100;
+        }
+        public int ReduceHp(int i)
+        {
+            return Hp -= i;
+        }
+
+        public int DevideHp()
+        {
+            return Hp /= 2;
+        }
+
+        public int TotalDef()
+        {
+            return ItemDef + Def;
+        }
+        public int TotalAtt()
+        {
+            return ItemAtt + (int)Att;
+        }
+        public void LevelUp()
+        {
+            Level++;
+            Def += 1;
+            Att += 0.5f;
         }
     }
 }

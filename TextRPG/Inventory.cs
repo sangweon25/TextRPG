@@ -40,13 +40,31 @@ namespace TextRPG
             Paid = paid;
         }
 
-        public void EquipItem(Item item)
+        public void EquipItem(Item item,Player player)
         {
             item.Name = item.Name.Insert(0,"[E]");
+
+            if (item.AbilityType == "공격력")
+            {
+                player.ItemAtt += item.Ability;
+            }
+            else if (item.AbilityType == "방어력")
+            {
+                player.ItemDef += item.Ability;
+            }
         }
-        public void UnEquipItem(Item item)
+        public void UnEquipItem(Item item,Player player)
         {
             item.Name = item.Name.Replace("[E]", "");
+
+            if(item.AbilityType == "공격력")
+            {
+                player.ItemAtt -= item.Ability;
+            }
+            else if(item.AbilityType == "방어력")
+            {
+                player.ItemDef -= item.Ability;
+            }
         }
 
     }

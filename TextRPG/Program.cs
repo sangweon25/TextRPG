@@ -58,7 +58,7 @@ namespace TextRPG
                         case 2:
                             Console.WriteLine("2");
                             Console.Clear();
-                            Menu.PrintInvertory(inventory.GetItem());
+                            Menu.PrintInvertory(inventory.GetItem(),player);
                             break;
                         case 3:
                             Console.WriteLine("3");
@@ -68,6 +68,7 @@ namespace TextRPG
                         case 4:
                             Console.WriteLine("4");
                             Console.Clear();
+                            Dungeon.EnterDungeon(player);
                             break;
                         case 5:
                             Console.WriteLine("5");
