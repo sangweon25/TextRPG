@@ -1,9 +1,22 @@
 ﻿using System.Numerics;
+using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace TextRPG
 {
     internal class Program
     {
+        public void SaveLoad()
+        {
+            string folderPath = "./Save";
+            DirectoryInfo SaveFolder = new DirectoryInfo(folderPath);
+
+            if(SaveFolder.Exists == false)
+            {
+                SaveFolder.Create();
+            }
+        }
+
         static Player player = new Player(1, "Ash", "전사", 10, 5, 100, 15000);
         static Inventory inventory = new Inventory();
         static Inventory store = new Inventory();

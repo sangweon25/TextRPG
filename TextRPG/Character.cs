@@ -53,7 +53,10 @@ namespace TextRPG
         }
         public int ReduceHp(int i)
         {
-            return Hp -= i;
+            Hp -= i;
+            if (Hp < 0)
+                Hp = 0;
+            return Hp;
         }
 
         public int DevideHp()

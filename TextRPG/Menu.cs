@@ -168,10 +168,12 @@ namespace TextRPG
                 Console.WriteLine($"{player.Gold} G\n");
                 Console.WriteLine("[아이템 목록]");
 
-                if(buy == true)
-                    PrintStoretItem(buy,sell,storeItem,true);
-                else if(sell ==true)
-                    PrintStoretItem(buy, sell, playerItem, true);
+                if (buy == true)
+                    PrintStoretItem(buy, sell, storeItem);
+                else if (sell == true)
+                    PrintStoretItem(buy, sell, playerItem);
+                else
+                    PrintStoretItem(false,false,storeItem);
 
                 if (buy == false&& sell == false)
                 {
@@ -265,26 +267,27 @@ namespace TextRPG
             }//while
         }//PrintStore method
 
-        public static void PrintStoretItem(bool buyMenu,bool sellMenu, List<Item>ItemList, bool isBuy)
+        public static void PrintStoretItem(bool buyMenu,bool sellMenu, List<Item>ItemList)
         {
             int i = 1;
             foreach (Item item in ItemList)
             {
-                if (buyMenu)
+                //구매 or 판매 창에서 번호출력
+                if (buyMenu || sellMenu)
                 {
                     Console.Write($"- {i++} ");
-                    Console.Write($"{item.Name}  \t| {item.AbilityType} +{item.Ability}\t| {item.Description}\t| ");
-                    if (item.Paid.Contains("구매완료"))
-                        Console.WriteLine(item.Paid);
-                    else
-                        Console.WriteLine("{0} G", item.Gold);
                 }
-                else if (sellMenu && item.Paid.Contains("구매완료"))
-                {
-                    Console.Write($"- {i++} ");
-                    Console.WriteLine($"{item.Name}  \t| {item.AbilityType} +{item.Ability}\t| {item.Description}\t| {item.Gold*0.85f} ");
-                }
-              
+                //아이템 정보 출력 
+                Console.Write($"{item.Name}  \t| {item.AbilityType} +{item.Ability}\t| {item.Description}\t| ");
+
+                //구매 완료 , 판매, 구매x에 따른 다른 출력
+                if (item.Paid.Contains("구매완료"))
+                    Console.WriteLine(item.Paid);
+                else if(sellMenu && item.Paid.Contains("구매완료"))
+                    Console.WriteLine(item.Gold * 0.85f);
+                else
+                    Console.WriteLine("{0} G", item.Gold);
+
             }
         }//PCurrentItem Method
 

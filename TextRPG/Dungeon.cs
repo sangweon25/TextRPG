@@ -40,7 +40,12 @@ namespace TextRPG
                             Console.Clear();
                             break;
                         case 1:
-                            if (player.TotalDef() < easy && fail < 5)
+                            if(player.Hp == 0)
+                            {
+                                Console.Clear();
+                                DugneonFail(player);
+                            }
+                            else if (player.TotalDef() < easy && fail < 5)
                             {
                                 Console.Clear();
                                 DugneonFail(player);
@@ -52,19 +57,29 @@ namespace TextRPG
                             }
                             break;
                         case 2:
-                            if (player.TotalDef() < normal && fail < 5)
+                            if (player.Hp == 0)
                             {
                                 Console.Clear();
                                 DugneonFail(player);
                             }
-                            else
+                            else if (player.TotalDef() < normal && fail < 5 )
+                            {
+                                Console.Clear();
+                                DugneonFail(player);
+                            }
+                            else 
                             {
                                 Console.Clear();
                                 DungeonClear(input, player);
                             }
                             break;
                         case 3:
-                            if (player.TotalDef() < hard && fail < 5)
+                            if (player.Hp == 0)
+                            {
+                                Console.Clear();
+                                DugneonFail(player);
+                            }
+                            else if (player.TotalDef() < hard && fail < 5 )
                             {
                                 Console.Clear();
                                 DugneonFail(player);
@@ -151,7 +166,10 @@ namespace TextRPG
                         Console.Clear();
                     }
                     else
+                    {
+                        state = false;
                         Menu.WrongInput();
+                    }
                 }
                 else
                     Menu.WrongInput();
@@ -167,6 +185,11 @@ namespace TextRPG
                 Console.WriteLine("권장 방어력을 높여오세요!\n");
                 Console.WriteLine("[탐험결과]");
                 Console.WriteLine($"체력 {player.Hp} -> {player.DevideHp()}\n");
+
+                if(player.Hp ==0)
+                {
+                    Console.WriteLine("Hp를 회복하세요\n");
+                }
 
                 Console.WriteLine("0. 나가기\n");
                 Console.Write("원하시는 행동을 입력해주세요.\n>>");
